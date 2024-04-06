@@ -21,7 +21,6 @@ final class ImagesListViewController: UIViewController {
         }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 200
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
         // Do any additional setup after loading the view.
@@ -58,10 +57,13 @@ extension ImagesListViewController {
         let likeImage = isLiked ? UIImage(named: "active") : UIImage(named: "noActive")
         cell.Button.setImage(likeImage, for: .normal)
     }
+
 }
-    
 extension ImagesListViewController: UITableViewDelegate {
-    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) -> CGFloat {
+    
+    func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    
+    func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return 0
         }
