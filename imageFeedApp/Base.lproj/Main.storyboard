@@ -56,13 +56,13 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ZXX-bF-Lvm" firstAttribute="leading" secondItem="cAT-qT-kUb" secondAttribute="leading" id="0OC-DC-0sG" userLabel="Date Label.leading = 0.leading +8"/>
+                                                <constraint firstItem="ZXX-bF-Lvm" firstAttribute="leading" secondItem="cAT-qT-kUb" secondAttribute="leading" constant="8" id="0OC-DC-0sG" userLabel="Date Label.leading = 0.leading +8"/>
                                                 <constraint firstAttribute="trailing" secondItem="cAT-qT-kUb" secondAttribute="trailing" constant="16" id="DAZ-df-94M"/>
                                                 <constraint firstItem="ouV-aj-Ehd" firstAttribute="top" secondItem="cAT-qT-kUb" secondAttribute="top" id="Mrj-Fr-e3C"/>
-                                                <constraint firstItem="cAT-qT-kUb" firstAttribute="trailing" secondItem="ZXX-bF-Lvm" secondAttribute="trailing" id="P4Y-vy-B6N" userLabel="0.trailing ≥ Date Label.trailing +8"/>
+                                                <constraint firstItem="cAT-qT-kUb" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZXX-bF-Lvm" secondAttribute="trailing" constant="8" id="P4Y-vy-B6N" userLabel="0.trailing ≥ Date Label.trailing +8"/>
                                                 <constraint firstAttribute="bottom" secondItem="cAT-qT-kUb" secondAttribute="bottom" constant="4" id="Y3u-Ji-DXw"/>
                                                 <constraint firstItem="cAT-qT-kUb" firstAttribute="trailing" secondItem="ouV-aj-Ehd" secondAttribute="trailing" id="YlT-WF-jnB"/>
-                                                <constraint firstItem="cAT-qT-kUb" firstAttribute="bottom" secondItem="ZXX-bF-Lvm" secondAttribute="bottom" id="gv6-oq-xau" userLabel="0.bottom = Date Label.bottom +8"/>
+                                                <constraint firstItem="cAT-qT-kUb" firstAttribute="bottom" secondItem="ZXX-bF-Lvm" secondAttribute="bottom" constant="8" id="gv6-oq-xau" userLabel="0.bottom = Date Label.bottom +8"/>
                                                 <constraint firstItem="cAT-qT-kUb" firstAttribute="top" secondItem="i8l-lA-dXm" secondAttribute="top" constant="4" id="k0o-ms-Wk5"/>
                                                 <constraint firstItem="cAT-qT-kUb" firstAttribute="leading" secondItem="i8l-lA-dXm" secondAttribute="leading" constant="16" id="wrL-EW-hdc"/>
                                             </constraints>
