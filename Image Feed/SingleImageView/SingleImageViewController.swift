@@ -62,16 +62,16 @@ final class SingleImageViewController: UIViewController {
 
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        imageView
+        self.imageView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) { // вычисляем внутренние отступы, чтобы оцентровать картинку после зумирования
+        let boundSize = scrollView.bounds.size
+        let frameToCenter = imageView.frame
+        let contentInsetX = max((boundSize.width - frameToCenter.size.width) * 0.5, 0)
+        let contentInsetY = max((boundSize.height - frameToCenter.size.height) * 0.5, 0)
+        scrollView.contentInset = UIEdgeInsets(top: contentInsetY, left: contentInsetX, bottom: contentInsetY, right: contentInsetX) // устанавливаем внутренние отступы
+        scrollView.contentInsetAdjustmentBehavior = .automatic // устанавливаем отскок содержимого внутри отступов
     }
 }
-func scrollViewDidZoom(_ scrollView: UIScrollView) { // вычисляем внутренние отступы, чтобы оцентровать картинку после зумирования
-    let boundSize = scrollView.bounds.size
-    let frameToCenter = imageView.frame
-    let contentInsetX = max((boundSize.width - frameToCenter.size.width) * 0.5, 0)
-    let contentInsetY = max((boundSize.height - frameToCenter.size.height) * 0.5, 0)
-    scrollView.contentInset = UIEdgeInsets(top: contentInsetY, left: contentInsetX, bottom: contentInsetY, right: contentInsetX) // устанавливаем внутренние отступы
-    scrollView.contentInsetAdjustmentBehavior = .automatic // устанавливаем отскок содержимого внутри отступов
-}
-
 
