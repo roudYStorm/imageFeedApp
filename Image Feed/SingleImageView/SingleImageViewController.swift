@@ -1,14 +1,18 @@
 import UIKit
 
+import UIKit
+
 final class SingleImageViewController: UIViewController {
     var image: UIImage? {
         didSet {
-            guard isViewLoaded, let image else { return }
+            guard isViewLoaded else { return } // проверяем был ли раньше загружен view
             imageView.image = image
-            imageView.frame.size = image.size
-            rescaleAndCenterImageInScrollView(image: image)
+            if let image = image {
+                rescaleAndCenterImageInScrollView(image: image)
+            }
         }
     }
+    
 
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var imageView: UIImageView!
@@ -61,3 +65,13 @@ extension SingleImageViewController: UIScrollViewDelegate {
         imageView
     }
 }
+func scrollViewDidZoom(_ scrollView: UIScrollView) { // вычисляем внутренние отступы, чтобы оцентровать картинку после зумирования
+    let boundSize = scrollView.bounds.size
+    let frameToCenter = imageView.frame
+    let contentInsetX = max((boundSize.width - frameToCenter.size.width) * 0.5, 0)
+    let contentInsetY = max((boundSize.height - frameToCenter.size.height) * 0.5, 0)
+    scrollView.contentInset = UIEdgeInsets(top: contentInsetY, left: contentInsetX, bottom: contentInsetY, right: contentInsetX) // устанавливаем внутренние отступы
+    scrollView.contentInsetAdjustmentBehavior = .automatic // устанавливаем отскок содержимого внутри отступов
+}
+
+
