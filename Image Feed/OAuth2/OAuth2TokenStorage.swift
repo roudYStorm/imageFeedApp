@@ -6,7 +6,6 @@ final class OAuth2TokenStorage {
                 print("Bearer token isn't string")
                 return UserDefaults.standard.string(forKey: Constants.UserDefaults.bearerTokenKey)
             }
-            
             return token
         }
         set {
