@@ -14,6 +14,8 @@ final class WebViewViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
+    @IBOutlet var backButton: UIButton!
+    
     
     weak var delegate: WebViewControllerDelegate?
     
@@ -54,6 +56,10 @@ final class WebViewViewController: UIViewController {
         }
     }
     
+    @IBAction func tapBackButton(_ sender: Any) {
+        guard let delegate else {return}
+        delegate.webViewViewControllerDidCancel(self)
+    }
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
