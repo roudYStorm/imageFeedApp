@@ -8,7 +8,6 @@ final class OAuth2Service {
         case codeError
         case tokenError
     }
-    
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         let baseURL = URL(string: "https://unsplash.com")
         
