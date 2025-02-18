@@ -10,7 +10,7 @@ final class OAuth2Service {
         case tokenError
     }
     
-    func makeOAuthTokenRequest(code: String) -> URLRequest? {
+    private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         let baseURL = URL(string: "https://unsplash.com")
         guard
             let url = URL(string: "/oauth/token"
