@@ -28,6 +28,7 @@
 		EBD277CB2D64CA9200248112 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277CA2D64CA9200248112 /* UIBlockingProgressHUD.swift */; };
 		EBD277CD2D64E43600248112 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277CC2D64E43600248112 /* ProfileService.swift */; };
 		EBD277D22D64E82F00248112 /* ErrorsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277D12D64E82F00248112 /* ErrorsList.swift */; };
+		EBD277D42D64F57000248112 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277D32D64F57000248112 /* ProfileImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		EBD277CA2D64CA9200248112 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		EBD277CC2D64E43600248112 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		EBD277D12D64E82F00248112 /* ErrorsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsList.swift; sourceTree = "<group>"; };
+		EBD277D32D64F57000248112 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			children = (
 				EBD277CA2D64CA9200248112 /* UIBlockingProgressHUD.swift */,
 				EBD277CC2D64E43600248112 /* ProfileService.swift */,
+				EBD277D32D64F57000248112 /* ProfileImageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				EBA4C0372CF0E9BD00C0C617 /* WebViewViewController.swift in Sources */,
 				EBD277C52D5A947000248112 /* OAuthTokenResponseBody.swift in Sources */,
 				EBD277BB2D5A210900248112 /* OAuth2Service.swift in Sources */,
+				EBD277D42D64F57000248112 /* ProfileImageService.swift in Sources */,
 				EBD277C22D5A93AF00248112 /* URLSesstion + Ext.swift in Sources */,
 				7D3DFB1528DDF696005A13F3 /* ImagesListCell.swift in Sources */,
 			);
