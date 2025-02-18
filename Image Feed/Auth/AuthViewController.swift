@@ -82,13 +82,6 @@ final class AuthViewController: UIViewController {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-    //     private func configureBackButton() {
-    //          navigationController?.navigationBar.backIndicatorImage = UIImage(resource: .backward)
-    //          navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(resource: .backward)
-    //          navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    //          navigationItem.backBarButtonItem?.tintColor = UIColor(resource: .ypBlack)
-    //      }
 }
 
 extension AuthViewController: WebViewControllerDelegate {
