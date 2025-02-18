@@ -1,6 +1,7 @@
 import Foundation
 
 final class OAuth2Service {
+    
     static let shared = OAuth2Service()
     private init() {}
     
@@ -8,9 +9,9 @@ final class OAuth2Service {
         case codeError
         case tokenError
     }
+    
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         let baseURL = URL(string: "https://unsplash.com")
-        
         guard
             let url = URL(string: "/oauth/token"
                           + "?client_id=\(Constants.accessKey)"
@@ -23,7 +24,6 @@ final class OAuth2Service {
             print("OAuth2Service url - error")
             return nil
         }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         return request
@@ -38,7 +38,6 @@ final class OAuth2Service {
         let task = URLSession.shared.data(for: request) { result in
             switch result {
             case .success(let data):
-                
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {

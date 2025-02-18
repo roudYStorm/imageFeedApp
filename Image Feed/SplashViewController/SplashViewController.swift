@@ -1,25 +1,21 @@
-import Foundation
 import UIKit
 
 final class SplashViewController: UIViewController {
+    
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let showGallerySegueId = "showGallery"
     private let showAuthSegueId = "showAuthorization"
-    
     private let oauth2Service = OAuth2Service.shared
     private let oauth2TokenStorage = OAuth2TokenStorage()
     
     override func viewDidAppear(_ animated: Bool) {
-          super.viewDidAppear(animated)
-          
-          showNextScreen()
-      }
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    
-   
+        super.viewDidAppear(animated)
+        showNextScreen()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
     
     private func showNextScreen() {
         if let token = oauth2TokenStorage.token, !token.isEmpty {
@@ -48,7 +44,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                 assertionFailure("Failed to prepare for \(showAuthSegueId)")
                 return
             }
-            
             authViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
