@@ -118,6 +118,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
+                                <color key="backgroundColor" name="YP Black"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="GaN-LG-s46"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="G4B-u4-C7b"/>
                                 <connections>
