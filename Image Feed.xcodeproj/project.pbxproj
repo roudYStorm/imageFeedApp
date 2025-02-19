@@ -29,6 +29,8 @@
 		EBD277CD2D64E43600248112 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277CC2D64E43600248112 /* ProfileService.swift */; };
 		EBD277D22D64E82F00248112 /* ErrorsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277D12D64E82F00248112 /* ErrorsList.swift */; };
 		EBD277D42D64F57000248112 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277D32D64F57000248112 /* ProfileImageService.swift */; };
+		EBD277D62D65E78400248112 /* UserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277D52D65E78400248112 /* UserResult.swift */; };
+		EBD277D92D65FBD700248112 /* ProfileConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD277D82D65FBD700248112 /* ProfileConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		EBD277CC2D64E43600248112 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		EBD277D12D64E82F00248112 /* ErrorsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsList.swift; sourceTree = "<group>"; };
 		EBD277D32D64F57000248112 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
+		EBD277D52D65E78400248112 /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
+		EBD277D82D65FBD700248112 /* ProfileConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD277C42D5A947000248112 /* OAuthTokenResponseBody.swift */,
+				EBD277D52D65E78400248112 /* UserResult.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 				EBD277CA2D64CA9200248112 /* UIBlockingProgressHUD.swift */,
 				EBD277CC2D64E43600248112 /* ProfileService.swift */,
 				EBD277D32D64F57000248112 /* ProfileImageService.swift */,
+				EBD277D82D65FBD700248112 /* ProfileConstants.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -270,10 +276,12 @@
 				8F83109D28E459BD00BA471F /* ProfileViewController.swift in Sources */,
 				EBD277C02D5A216100248112 /* SplashViewController.swift in Sources */,
 				7D3DFB1628DDF696005A13F3 /* ImagesListViewController.swift in Sources */,
+				EBD277D92D65FBD700248112 /* ProfileConstants.swift in Sources */,
 				EBD277BD2D5A212800248112 /* OAuth2TokenStorage.swift in Sources */,
 				EBA4C0352CF0E83300C0C617 /* AuthViewController.swift in Sources */,
 				EBA4C0322CD29CA800C0C617 /* Constants.swift in Sources */,
 				EBD277CB2D64CA9200248112 /* UIBlockingProgressHUD.swift in Sources */,
+				EBD277D62D65E78400248112 /* UserResult.swift in Sources */,
 				8F8310A028E4D0C300BA471F /* SingleImageViewController.swift in Sources */,
 				EBA4C0372CF0E9BD00C0C617 /* WebViewViewController.swift in Sources */,
 				EBD277C52D5A947000248112 /* OAuthTokenResponseBody.swift in Sources */,

@@ -19,6 +19,7 @@ struct Profile {
     }
 
 final class ProfileService {
+    private var storage = OAuth2TokenStorage()
     static let shared = ProfileService()
     private init() {}
     
