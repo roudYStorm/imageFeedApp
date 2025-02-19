@@ -18,6 +18,8 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private enum AuthServiceError: Error {
         case invalidRequest
+        case codeError
+        case tokenError
     }
 
     private enum OAuth2ServiceConstants {
@@ -27,18 +29,18 @@ final class OAuth2Service {
         private init() {
         }
 
-    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func fetchOAuthToken(_ code: String, handler: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         if task != nil {
             if lastCode != code {
                 task?.cancel()
             } else {
-                completion(.failure(AuthServiceError.invalidRequest))
+                handler(.failure(AuthServiceError.invalidRequest))
                 return
             }
         } else {
             if lastCode == code {
-                completion(.failure(AuthServiceError.invalidRequest))
+                handler(.failure(AuthServiceError.invalidRequest))
                 return
             }
         }
@@ -46,36 +48,56 @@ final class OAuth2Service {
         guard
             let request = makeOAuthTokenRequest(code: code)
         else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            handler(.failure(AuthServiceError.invalidRequest))
             return
         }
 
-        let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
-            DispatchQueue.main.async {
-                // TODO: разбора ответа, из 10 спринта
-                self?.task = nil
-                self?.lastCode = nil
+        let task = URLSession.shared.data(for: request) { result in
+                    switch result {
+                    case .success(let data):
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        do {
+                            let token = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                            guard let token = token.accessToken else {
+                                return
+                                
+                            }
+                            handler(.success(token))
+                        } catch {
+                            handler(.failure(error))
+                        }
+                    case .failure(let error):
+                        print("Error: \(error)")
+                        handler(.failure(error))
+                    }
+                }
+                task.resume()
             }
         }
-        self.task = task
-        task.resume()
-    }
     
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
-        guard let url = URL(string: "...\(code)") else {
-            assertionFailure("Failed to create URL")
-            return nil
+            let baseURL = URL(string: "https://unsplash.com")
+            guard
+                let url = URL(string: "/oauth/token"
+                              + "?client_id=\(Constants.accessKey)"
+                              + "&&client_secret=\(Constants.secretKey)"
+                              + "&&redirect_uri=\(Constants.redirectURI)"
+                              + "&&code=\(code)"
+                              + "&&grant_type=authorization_code",
+                              relativeTo: baseURL)
+            else {
+                print("OAuth2Service url - error")
+                return nil
+            }
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            return request
         }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        return request
-    }
-    
-}
 
 
     
-    private let urlSession = URLSession.shared
+   /*/ private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
     private var lastCode: String?
@@ -98,5 +120,5 @@ final class OAuth2Service {
         print(request)
         return request
     }
-    
+    */
     

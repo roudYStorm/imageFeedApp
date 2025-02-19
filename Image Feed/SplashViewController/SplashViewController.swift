@@ -7,7 +7,8 @@ final class SplashViewController: UIViewController {
     private let showAuthSegueId = "showAuthorization"
     private let oauth2Service = OAuth2Service.shared
     private let oauth2TokenStorage = OAuth2TokenStorage()
-    
+    private let profileService = ProfileService.shared
+    private let storage = OAuth2TokenStorage()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
