@@ -1,9 +1,8 @@
 import UIKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     // MARK: - View
-    
     private let avatarImageView = UIImageView()
     private let logoutButton = UIButton()
     private let nameLabel = UILabel()
@@ -11,27 +10,22 @@ class ProfileViewController: UIViewController {
     private let descriptionLabel = UILabel()
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayer()
     }
     
     // MARK: - Action
-    
     @objc
     private func didTapLogoutButton() {
-        
+        // TO-DO: реализация данной функции будет произведена в следующем спринте
     }
-    
 }
 
 // MARK: - Extension
-
 extension ProfileViewController {
     
     // MARK: - Function
-    
     func setupLayer() {
         view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         configureAvatarImageView()
@@ -55,7 +49,6 @@ extension ProfileViewController {
             avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32)
         ])
-        
     }
     
     func  configureLogoutButton() {
