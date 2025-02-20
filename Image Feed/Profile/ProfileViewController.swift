@@ -1,5 +1,5 @@
 import UIKit
-
+import Kingfisher
 final class ProfileViewController: UIViewController {
     
     // MARK: - View
@@ -13,28 +13,28 @@ final class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayer()
+       
         profileImageServiceObserver = NotificationCenter.default
-                    .addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                        object: nil,
-                        queue: .main                                        
-                    ) { [weak self] _ in
-                        guard let self = self else { return }
-                        self.updateAvatar()
-                    }
-                updateAvatar()
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
         
     }
     private func updateAvatar() {
-           guard
-               let profileImageURL = ProfileImageService.shared.avatarURL,
-               let url = URL(string: profileImageURL)
-           else { 
-               print("нельзя создать makeProfileRequest")
-               return }
-           // TODO [Sprint 11] Обновить аватар, используя Kingfisher
-       }
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else {
+            print("нельзя создать makeProfileRequest")
+            return }
+        setupLayer(imageUrl: url)
+    }
     
     // MARK: - Action
     @objc
@@ -47,18 +47,23 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController {
     
     // MARK: - Function
-    func setupLayer() {
+    func setupLayer(imageUrl: URL) {
         view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        configureAvatarImageView()
+        configureAvatarImageView(imageUrl: imageUrl)
         configureLogoutButton()
         configureNameLabel()
         configureLoginNameLabel()
         configureDescriptionLabel()
     }
     
-    func configureAvatarImageView() {
+    func configureAvatarImageView(imageUrl: URL) {
+        let placeholder = UIImage(named: "avatar") ?? UIImage(systemName: "person.crop.circle.fill")
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "avatar") ?? UIImage(systemName: "person.crop.circle.fill")
+        let profileIcon = UIImageView()
+        profileIcon.kf.indicatorType = .activity
+        profileIcon.kf.setImage(with: imageUrl, placeholder: placeholder, options: [.processor(processor)])
         avatarImageView.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         avatarImageView.clipsToBounds = true

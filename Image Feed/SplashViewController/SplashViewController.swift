@@ -13,7 +13,11 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showNextScreen()
+        if let token = oauth2TokenStorage.token {
+            self.fetchProfile(token: token)
+        } else {
+            self.switchToAuthViewController()
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,11 +59,28 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-        switchToTabBarController()
+        guard let token = oauth2TokenStorage.token else {
+            print ("Токен не работает")
+            return
+        }
+        self.fetchProfile(token: token)
         
     }
+    private func switchToAuthViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
+            assertionFailure("AuthViewController не найден в сториборде")
+            return
+        }
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true)
+    }
+    
     private func fetchProfile(token: String) {
+        UIBlockingProgressHUD.show()
         profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
             guard let self = self else {
                 print("функция fetchProfile не работает ")
                 return }
