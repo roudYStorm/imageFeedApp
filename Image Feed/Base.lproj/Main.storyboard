@@ -257,7 +257,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HjQ-Md-FDF">
-                                <rect key="frame" x="0.0" y="53" width="393" height="799"/>
+                                <rect key="frame" x="0.0" y="48" width="393" height="804"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -265,7 +265,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8z-XW-wNv">
-                                <rect key="frame" x="9" y="9" width="44" height="44"/>
+                                <rect key="frame" x="9" y="4" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="HGJ-3O-lzP"/>
                                     <constraint firstAttribute="height" constant="44" id="eq3-05-qMq"/>
@@ -276,20 +276,22 @@
                                     <action selector="tapBackButton:" destination="2bz-jJ-YMB" eventType="touchUpInside" id="naT-f3-RNJ"/>
                                 </connections>
                             </button>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="D5U-xS-9vD">
-                                <rect key="frame" x="-7" y="9" width="406" height="4"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="D5U-xS-9vD">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="4"/>
                                 <color key="progressTintColor" name="YP Black"/>
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NZn-hD-GV5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="D5U-xS-9vD" secondAttribute="trailing" id="3ib-D0-d36"/>
                             <constraint firstAttribute="bottom" secondItem="HjQ-Md-FDF" secondAttribute="bottom" id="CgG-ad-1om"/>
-                            <constraint firstItem="O8z-XW-wNv" firstAttribute="top" secondItem="tfq-ky-V6B" secondAttribute="top" constant="9" id="EnZ-as-9A8"/>
                             <constraint firstItem="HjQ-Md-FDF" firstAttribute="top" secondItem="O8z-XW-wNv" secondAttribute="bottom" id="MHs-MJ-mcI"/>
                             <constraint firstItem="O8z-XW-wNv" firstAttribute="leading" secondItem="NZn-hD-GV5" secondAttribute="leading" constant="9" id="Mkf-uX-HNe"/>
+                            <constraint firstItem="D5U-xS-9vD" firstAttribute="leading" secondItem="tfq-ky-V6B" secondAttribute="leading" id="T8J-RZ-AGz"/>
+                            <constraint firstItem="D5U-xS-9vD" firstAttribute="top" secondItem="NZn-hD-GV5" secondAttribute="top" id="cGj-ba-fxf"/>
                             <constraint firstAttribute="trailing" secondItem="HjQ-Md-FDF" secondAttribute="trailing" id="cH3-1i-DdJ" userLabel="trailingMargin = Web View.trailing "/>
+                            <constraint firstItem="O8z-XW-wNv" firstAttribute="top" secondItem="D5U-xS-9vD" secondAttribute="bottom" id="kSI-fP-rn6"/>
                             <constraint firstItem="HjQ-Md-FDF" firstAttribute="leading" secondItem="tfq-ky-V6B" secondAttribute="leading" id="sBE-6F-TAZ" userLabel="Web View.leading = leading"/>
                         </constraints>
                     </view>
