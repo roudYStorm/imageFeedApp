@@ -27,6 +27,7 @@ final class ImagesListViewController: UIViewController {
                 let indexPath = sender as? IndexPath
             else {
                 assertionFailure("Invalid segue destination")
+                print("func prepare не работает")
                 return
             }
             let image = UIImage(named: photosName[indexPath.row])
@@ -47,6 +48,7 @@ extension ImagesListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
 
         guard let imageListCell = cell as? ImagesListCell else {
+            print("func tableView не работает")
             return UITableViewCell()
         }
         configCell(for: imageListCell, with: indexPath)
@@ -58,6 +60,7 @@ extension ImagesListViewController {
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
+            print("func configCell не работает")
             return
         }
         cell.cellImage.image = image
@@ -76,6 +79,7 @@ extension ImagesListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
+            print("func tableView не работает")
             return 0
         }
         

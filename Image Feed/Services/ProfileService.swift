@@ -7,7 +7,7 @@ struct ProfileResult: Decodable {
     var lastName: String?
     var bio: String?
     
-    }
+}
 
 struct Profile {
     
@@ -16,7 +16,7 @@ struct Profile {
     let loginName: String?
     let bio: String?
     
-    }
+}
 
 final class ProfileService {
     private var storage = OAuth2TokenStorage()
@@ -24,20 +24,22 @@ final class ProfileService {
     private init() {}
     
     private let decoder = JSONDecoder()
-        private(set) var profile: Profile?
-        
-        private enum RequestError: Error { // Ошибки сети, потом УДАЛИТЬ
-            case invalidRequest
-            case invalidBaseURL
-            case invalidURLComponents
-            case badRequest
-        }
-        
-        private enum ParsingJSONServiceError: Error { // Ошибки декодирования, потом УДАЛИТЬ
-            case decodeError
-            case invalidJson
-            case incorrectObject
-        }
+    private(set) var profile: Profile?
+    
+    private enum RequestError: Error { // Ошибки сети, потом УДАЛИТЬ
+        case invalidRequest
+        case invalidBaseURL
+        case invalidURLComponents
+        case badRequest
+    }
+    
+    private enum ParsingJSONServiceError: Error { // Ошибки декодирования, потом УДАЛИТЬ
+        case decodeError
+        case invalidJson
+        case incorrectObject
+    }
+    
+    
     
     private func makeProfileRequest(token: String) -> URLRequest? {
         guard let baseUrl = URL(string: Constants.defaultBaseURL!.absoluteString) else {
@@ -47,6 +49,7 @@ final class ProfileService {
                                 "/me",
                             relativeTo: baseUrl
         ) else {
+            print("нельзя создать makeProfileRequest")
             preconditionFailure("Invalid URL Components \(ErrorsList.RequestError.invalidURLComponents)")
         }
         
@@ -57,38 +60,34 @@ final class ProfileService {
         return request
     }
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
-                assert(Thread.isMainThread)
-                
-                guard let request = makeProfileRequest(token: token) else {
-                    return completion(.failure(RequestError.invalidRequest))
-                }
-                
-                let task = URLSession.shared.data(for: request) { [weak self] result in
-                    switch result {
-                    case .success(let data):
-                        self?.decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        do {
-                            guard let response = try self?.decoder.decode(ProfileResult.self, from: data) else {
-                                print("Parsing JSON error:\(ParsingJSONServiceError.invalidJson)")
-                                    return
-                            }
-                            let profile = Profile(username: response.username,
-                                                  name: response.firstName + " " + (response.lastName ?? ""),
-                                                  loginName: "@" + response.username,
-                                                  bio: response.bio ?? "")
-                            self?.profile = profile
-                            completion(.success(profile))
-                        } catch {
-                            print("\(ParsingJSONServiceError.decodeError)")
-                        }
-                    case .failure(let error):
-                        print("Network error: \(error)")
-                        completion(.failure(error))
-                    }
-                }
-                
-                task.resume()
-            }
+        assert(Thread.isMainThread)
+        
+        guard let request = makeProfileRequest(token: token) else {
+            print("нельзя создать makeProfileRequest")
+            return completion(.failure(RequestError.invalidRequest))
             
         }
-    
+        
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<ProfileResult, Error>) in
+            
+            switch result {
+            case .success(let response):
+                self.decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                let profile = Profile(username: response.username,
+                                      name: response.firstName + " " + (response.lastName ?? ""),
+                                      loginName: "@" + response.username,
+                                      bio: response.bio ?? "")
+                self.profile = profile
+                completion(.success(profile))
+            
+        case .failure(let error):
+            print("Network error: \(error)")
+            completion(.failure(error))
+        }
+    }
+    task.resume()
+}
+
+}
+

@@ -21,6 +21,7 @@ final class WebViewViewController: UIViewController {
         
         webView.navigationDelegate = self
         loadAuthView()
+        updateProgress()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +54,9 @@ final class WebViewViewController: UIViewController {
     }
     
     @IBAction func tapBackButton(_ sender: Any) {
-        guard let delegate else {return}
+        guard let delegate else {
+            print("не рабочий делегат")
+            return}
         delegate.webViewViewControllerDidCancel(self)
     }
     

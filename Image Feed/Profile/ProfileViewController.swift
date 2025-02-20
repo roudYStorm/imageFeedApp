@@ -8,13 +8,33 @@ final class ProfileViewController: UIViewController {
     private let nameLabel = UILabel()
     private let loginNameLabel = UILabel()
     private let descriptionLabel = UILabel()
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayer()
+        profileImageServiceObserver = NotificationCenter.default
+                    .addObserver(
+                        forName: ProfileImageService.didChangeNotification,
+                        object: nil,
+                        queue: .main                                        
+                    ) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.updateAvatar()
+                    }
+                updateAvatar()
         
     }
+    private func updateAvatar() {
+           guard
+               let profileImageURL = ProfileImageService.shared.avatarURL,
+               let url = URL(string: profileImageURL)
+           else { 
+               print("нельзя создать makeProfileRequest")
+               return }
+           // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+       }
     
     // MARK: - Action
     @objc
@@ -110,6 +130,7 @@ extension ProfileViewController {
         ])
     }
 }
+
 
 
 

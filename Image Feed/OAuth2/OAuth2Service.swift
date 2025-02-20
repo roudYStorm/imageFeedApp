@@ -21,14 +21,14 @@ final class OAuth2Service {
         case codeError
         case tokenError
     }
-
+    
     private enum OAuth2ServiceConstants {
         static let unsplashGetTokenURLString = "https://unsplash.com/oauth/token"
     }
-
-        private init() {
-        }
-
+    
+    private init() {
+    }
+    
     func fetchOAuthToken(_ code: String, handler: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         if task != nil {
@@ -48,77 +48,76 @@ final class OAuth2Service {
         guard
             let request = makeOAuthTokenRequest(code: code)
         else {
+            print("реквест не найден")
             handler(.failure(AuthServiceError.invalidRequest))
             return
         }
-
-        let task = URLSession.shared.data(for: request) { result in
-                    switch result {
-                    case .success(let data):
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        do {
-                            let token = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                            guard let token = token.accessToken else {
-                                return
-                                
-                            }
-                            handler(.success(token))
-                        } catch {
-                            handler(.failure(error))
-                        }
-                    case .failure(let error):
-                        print("Error: \(error)")
-                        handler(.failure(error))
-                    }
+        
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<OAuthTokenResponseBody, Error>) in
+            
+            switch result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                guard let token = data.accessToken
+                else {
+                    handler(.failure(AuthServiceError.tokenError))
+                    print("Токен не найден")
+                    return
                 }
-                task.resume()
+                handler(.success(token))
+            case .failure(let error):
+                print("Error: \(error)")
+                handler(.failure(error))
             }
         }
-    
-    private func makeOAuthTokenRequest(code: String) -> URLRequest? {
-            let baseURL = URL(string: "https://unsplash.com")
-            guard
-                let url = URL(string: "/oauth/token"
-                              + "?client_id=\(Constants.accessKey)"
-                              + "&&client_secret=\(Constants.secretKey)"
-                              + "&&redirect_uri=\(Constants.redirectURI)"
-                              + "&&code=\(code)"
-                              + "&&grant_type=authorization_code",
-                              relativeTo: baseURL)
-            else {
-                print("OAuth2Service url - error")
-                return nil
-            }
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            return request
-        }
-
-
-    
-   /*/ private let urlSession = URLSession.shared
-    
-    private var task: URLSessionTask?
-    private var lastCode: String?
-    
-    private func createOAuthRequest(code: String) -> URLRequest? {
-        var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token")
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "grant_type", value: "authorization_code")
-        ]
-        guard let url = urlComponents?.url else {
-            assertionFailure("Failed to create URL")
-            return nil
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        print(request)
-        return request
+        task.resume()
     }
-    */
-    
+}
+
+private func makeOAuthTokenRequest(code: String) -> URLRequest? {
+    let baseURL = URL(string: "https://unsplash.com")
+    guard
+        let url = URL(string: "/oauth/token"
+                      + "?client_id=\(Constants.accessKey)"
+                      + "&&client_secret=\(Constants.secretKey)"
+                      + "&&redirect_uri=\(Constants.redirectURI)"
+                      + "&&code=\(code)"
+                      + "&&grant_type=authorization_code",
+                      relativeTo: baseURL)
+    else {
+        print("OAuth2Service url - error")
+        return nil
+    }
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    return request
+}
+
+
+
+/*/ private let urlSession = URLSession.shared
+ 
+ private var task: URLSessionTask?
+ private var lastCode: String?
+ 
+ private func createOAuthRequest(code: String) -> URLRequest? {
+ var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token")
+ urlComponents?.queryItems = [
+ URLQueryItem(name: "client_id", value: Constants.accessKey),
+ URLQueryItem(name: "client_secret", value: Constants.secretKey),
+ URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+ URLQueryItem(name: "code", value: code),
+ URLQueryItem(name: "grant_type", value: "authorization_code")
+ ]
+ guard let url = urlComponents?.url else {
+ assertionFailure("Failed to create URL")
+ return nil
+ }
+ var request = URLRequest(url: url)
+ request.httpMethod = "POST"
+ print(request)
+ return request
+ }
+ */
+
