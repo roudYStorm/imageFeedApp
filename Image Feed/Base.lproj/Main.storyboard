@@ -270,8 +270,12 @@
                                     <constraint firstAttribute="width" constant="44" id="HGJ-3O-lzP"/>
                                     <constraint firstAttribute="height" constant="44" id="eq3-05-qMq"/>
                                 </constraints>
+                                <color key="tintColor" name="YP Black"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="nav_back_button"/>
+                                <state key="normal" image="nav_back_button">
+                                    <color key="titleColor" name="YP Black"/>
+                                    <color key="titleShadowColor" name="YP Black"/>
+                                </state>
                                 <connections>
                                     <action selector="tapBackButton:" destination="2bz-jJ-YMB" eventType="touchUpInside" id="naT-f3-RNJ"/>
                                 </connections>

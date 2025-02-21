@@ -25,18 +25,6 @@ final class ProfileImageService {
     // MARK: - Initializers
     private init() {}
     
-    private func makeRequest(username: String) -> URLRequest? {
-        guard let url = URL(string: "https://api.unsplash.com/users/\(username)") else {
-            print("cannot construct url for fetching image")
-            return nil
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        request.setValue("Bearer \(tokenStorage.token ?? "")", forHTTPHeaderField: "Authorization")
-        return request
-    }
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         if task != nil {
@@ -74,7 +62,7 @@ final class ProfileImageService {
                 NotificationCenter.default
                     .post(
                         name: ProfileImageService.didChangeNotification,
-                        object: self,                                          
+                        object: self,
                         userInfo: ["URL": avatarURL])
                 
             case .failure(let error):
@@ -88,6 +76,20 @@ final class ProfileImageService {
         self.task = task
         task.resume()
     }
+    
+    private func makeRequest(username: String) -> URLRequest? {
+        guard let url = URL(string: "https://api.unsplash.com/users/\(username)") else {
+            print("cannot construct url for fetching image")
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        request.setValue("Bearer \(tokenStorage.token ?? "")", forHTTPHeaderField: "Authorization")
+        return request
+    }
+    
 }
 
 

@@ -2,6 +2,14 @@ import UIKit
 
 final class SplashViewController: UIViewController {
     
+    private let imageView: UIImageView = {
+            let imageView = UIImageView()
+        imageView.image = UIImage(resource: .splashScreenLogo)
+            imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            return imageView
+        }()
+    
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let showGallerySegueId = "showGallery"
     private let showAuthSegueId = "showAuthorization"
@@ -10,6 +18,11 @@ final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let storage = OAuth2TokenStorage()
     let profileImageService = ProfileImageService.shared
+    
+    override func viewDidLoad() {
+           super.viewDidLoad()
+           configure()
+       }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,7 +45,17 @@ final class SplashViewController: UIViewController {
             performSegue(withIdentifier: showAuthSegueId, sender: self)
         }
     }
-    
+    private func configure() {
+            view.backgroundColor = UIColor(resource: .ypBlack)
+            view.addSubview(imageView)
+            
+            NSLayoutConstraint.activate([
+                imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1),
+            ])
+        }
+
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
