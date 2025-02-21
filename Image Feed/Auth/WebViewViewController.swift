@@ -18,6 +18,7 @@ final class WebViewViewController: UIViewController {
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.tintColor = UIColor(named: "YP Black")
         
         webView.navigationDelegate = self
         loadAuthView()

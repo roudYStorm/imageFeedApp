@@ -31,8 +31,7 @@ final class OAuth2Service {
     
     func fetchOAuthToken(_ code: String, handler: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
-        if let existingTask = task {
-        //if task != nil {
+        if task != nil {
             if lastCode != code {
                 task?.cancel()
             } else {

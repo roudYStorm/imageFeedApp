@@ -3,12 +3,12 @@ import UIKit
 final class SplashViewController: UIViewController {
     
     private let imageView: UIImageView = {
-            let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(resource: .splashScreenLogo)
-            imageView.contentMode = .scaleAspectFit
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            return imageView
-        }()
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let showGallerySegueId = "showGallery"
@@ -20,9 +20,9 @@ final class SplashViewController: UIViewController {
     let profileImageService = ProfileImageService.shared
     
     override func viewDidLoad() {
-           super.viewDidLoad()
-           configure()
-       }
+        super.viewDidLoad()
+        configure()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -31,6 +31,7 @@ final class SplashViewController: UIViewController {
         } else {
             self.switchToAuthViewController()
         }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,16 +47,16 @@ final class SplashViewController: UIViewController {
         }
     }
     private func configure() {
-            view.backgroundColor = UIColor(resource: .ypBlack)
-            view.addSubview(imageView)
-            
-            NSLayoutConstraint.activate([
-                imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1),
-            ])
-        }
-
+        view.backgroundColor = UIColor(resource: .ypBlack)
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 75),
+            imageView.widthAnchor.constraint(equalToConstant: 77.68)
+        ])
+    }
+    
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
