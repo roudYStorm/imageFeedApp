@@ -27,9 +27,14 @@ final class ProfileImageService {
     
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
-        if task != nil {
+        /*if task != nil {
             print("The request is already in progress")
             completion(.failure(ProfileServiceError.invalidRequest))
+            return
+        }*/
+        if let existingTask = task {
+            print("The request is already in progress")
+            completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         if self.username == username {
