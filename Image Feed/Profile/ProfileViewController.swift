@@ -86,7 +86,7 @@ extension ProfileViewController {
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.setImage(UIImage(named: "exit") ?? UIImage(systemName: "ipad.and.arrow.forward"), for: .normal)
         logoutButton.addTarget(self, action: #selector(Self.didTapLogoutButton), for: .touchUpInside)
-        logoutButton.tintColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        logoutButton.tintColor = UIColor(resource: .ypRed)
         view.addSubview(logoutButton)
         
         NSLayoutConstraint.activate([
