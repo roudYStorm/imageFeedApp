@@ -19,6 +19,7 @@ final class ProfileViewController: UIViewController {
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.didChangeNotification,
+               // forName: ImagesListService.didChangeNotification, какая из строчек не понятно
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
@@ -28,6 +29,7 @@ final class ProfileViewController: UIViewController {
         updateAvatar()
         
     }
+    
     private func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,

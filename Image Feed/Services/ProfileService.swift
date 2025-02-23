@@ -21,9 +21,12 @@ struct Profile {
 final class ProfileService {
     private var storage = OAuth2TokenStorage()
     static let shared = ProfileService()
+    private let urlSession = URLSession.shared
+    
     private init() {}
     
     private let decoder = JSONDecoder()
+    private var task: URLSessionTask?
     private(set) var profile: Profile?
     
     private enum RequestError: Error { // Ошибки сети, потом УДАЛИТЬ
