@@ -10,16 +10,17 @@ final class ProfileViewController: UIViewController {
     private let descriptionLabel = UILabel()
     private var profileImageServiceObserver: NSObjectProtocol?
     private var profileService: ProfileService = .shared
+    private let profileLogoutService = ProfileLogoutService.shared
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayer()
-       
+        
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.didChangeNotification,
-               // forName: ImagesListService.didChangeNotification, какая из строчек не понятно
+                // forName: ImagesListService.didChangeNotification, какая из строчек не понятно
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
@@ -45,9 +46,31 @@ final class ProfileViewController: UIViewController {
     // MARK: - Action
     @objc
     private func didTapLogoutButton() {
-        // TO-DO: реализация данной функции будет произведена в следующем спринте
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены что хотите выйти?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Да", style: .default) { _ in
+            self.profileLogoutService.logout()
+            
+            guard let window = UIApplication.shared.windows.first else {
+                assertionFailure("Invalid Configuration")
+                return
+            }
+            let authViewController = UIStoryboard(name: "Main", bundle: .main)
+                .instantiateViewController(withIdentifier: "AuthViewController")
+            window.rootViewController = authViewController
+            
+            UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {}, completion: nil)
+        }
+        
+        let noAction = UIAlertAction(title: "Нет", style: .default, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
+
 
 // MARK: - Extension
 extension ProfileViewController {
@@ -63,7 +86,7 @@ extension ProfileViewController {
     }
     
     func configureAvatarImageView() {
-       
+        
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "avatar") ?? UIImage(systemName: "person.crop.circle.fill")
         let profileIcon = UIImageView()
@@ -81,7 +104,7 @@ extension ProfileViewController {
         ])
     }
     override func viewDidLayoutSubviews() {
-         super.viewDidLayoutSubviews()
+        super.viewDidLayoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
     }
     func  configureLogoutButton() {
