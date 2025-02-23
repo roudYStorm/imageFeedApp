@@ -94,7 +94,9 @@ final class ProfileImageService {
         request.setValue("Bearer \(tokenStorage.token ?? "")", forHTTPHeaderField: "Authorization")
         return request
     }
-    
+    func deleteAvatar() {
+            avatarURL = nil
+        }
 }
 
 

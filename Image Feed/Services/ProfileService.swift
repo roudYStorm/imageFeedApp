@@ -83,14 +83,17 @@ final class ProfileService {
                                       bio: response.bio ?? "")
                 self.profile = profile
                 completion(.success(profile))
-            
-        case .failure(let error):
-            print("Network error: \(error)")
-            completion(.failure(error))
+                
+            case .failure(let error):
+                print("Network error: \(error)")
+                completion(.failure(error))
+            }
         }
+        task.resume()
     }
-    task.resume()
-}
-
+    func deletProfil() {
+        profile = nil
+    }
+    
 }
 

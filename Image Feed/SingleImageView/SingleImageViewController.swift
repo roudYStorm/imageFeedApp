@@ -4,11 +4,11 @@ final class SingleImageViewController: UIViewController {
     var imageURL: URL?
     var image: UIImage? {
         didSet {
-            guard isViewLoaded else { return } // проверяем был ли раньше загружен view
+            guard isViewLoaded, let image
+            else { return } // проверяем был ли раньше загружен view
             imageView.image = image
-            if let image = image {
-                rescaleAndCenterImageInScrollView(image: image)
-            }
+            imageView.frame.size = image.size
+            rescaleAndCenterImageInScrollView(image: image)
         }
     }
     
