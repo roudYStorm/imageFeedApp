@@ -21,9 +21,12 @@ struct Profile {
 final class ProfileService {
     private var storage = OAuth2TokenStorage()
     static let shared = ProfileService()
+    private let urlSession = URLSession.shared
+    
     private init() {}
     
     private let decoder = JSONDecoder()
+    private var task: URLSessionTask?
     private(set) var profile: Profile?
     
     private enum RequestError: Error { // Ошибки сети, потом УДАЛИТЬ
@@ -80,14 +83,17 @@ final class ProfileService {
                                       bio: response.bio ?? "")
                 self.profile = profile
                 completion(.success(profile))
-            
-        case .failure(let error):
-            print("Network error: \(error)")
-            completion(.failure(error))
+                
+            case .failure(let error):
+                print("Network error: \(error)")
+                completion(.failure(error))
+            }
         }
+        task.resume()
     }
-    task.resume()
-}
-
+    func deleteProfile() {
+        profile = nil
+    }
+    
 }
 

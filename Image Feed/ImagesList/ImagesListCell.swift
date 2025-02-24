@@ -1,13 +1,26 @@
 import UIKit
 
+protocol ImagesListCellDelegate: AnyObject {
+    func cellDidTapLike(_ cell: ImagesListCell)
+}
+
+
 final class ImagesListCell: UITableViewCell {
+    
     
     @IBOutlet var cellImage: UIImageView!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
-
+    
+    @IBAction func didTapLikeButton(_ sender: Any) {
+        delegate?.cellDidTapLike(self)
+    }
     static let reuseIdentifier = "ImagesListCell" // создаем идентификатор для переиспользования ячейки
     let gradientLayer = CAGradientLayer()
+    var delegate: ImagesListCellDelegate?
+    
+    
+    
     
     // MARK: - Lifecycle
     override func layoutSubviews() {
@@ -31,4 +44,14 @@ final class ImagesListCell: UITableViewCell {
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
         dateLabel.layer.insertSublayer(gradientLayer, at: 0)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cellImage.kf.cancelDownloadTask()
+    }
+    func setIsLiked(isLiked: Bool) {
+        likeButton.setImage(UIImage(resource: isLiked ? .active : .noActive), for: .normal)
+    }
 }
+
