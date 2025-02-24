@@ -91,7 +91,7 @@ final class ProfileService {
         }
         task.resume()
     }
-    func deletProfil() {
+    func deleteProfile() {
         profile = nil
     }
     

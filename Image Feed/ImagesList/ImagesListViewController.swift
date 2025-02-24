@@ -4,9 +4,6 @@ final class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     @IBOutlet private var tableView: UITableView!
-    
-    
-    
     var imageListService = ImagesListService.shared
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private var photos: [Photo] = []
@@ -68,8 +65,6 @@ final class ImagesListViewController: UIViewController {
                 print("func prepare не работает")
                 return
             }
-            //  let image = UIImage(named: photosName[indexPath.row])
-            //  viewController.image = image
             let photo = photos[indexPath.row]
             guard !photo.largeImageURL.isEmpty, let url = URL(string: photo.largeImageURL) else {
                 assertionFailure("Invalid or empty URL for image")
@@ -137,16 +132,6 @@ extension ImagesListViewController {
         }
     }
 }
-
-
-
-//  cell.cellImage.image = image
-// cell.dateLabel.text = dateFormatter.string(from: Date())
-//  let isLiked = indexPath.row % 2 == 0
-//  let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-//  cell.likeButton.setImage(likeImage, for: .normal)
-// }
-//}
 
 extension ImagesListViewController: UITableViewDelegate {
     
