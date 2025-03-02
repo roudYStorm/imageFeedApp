@@ -9,7 +9,7 @@ struct ProfileResult: Decodable {
     
 }
 
-struct Profile {
+public struct Profile {
     
     let username: String
     let name: String
@@ -45,7 +45,7 @@ final class ProfileService {
     
     
     private func makeProfileRequest(token: String) -> URLRequest? {
-        guard let baseUrl = URL(string: Constants.defaultBaseURL?.absoluteString ?? "") else {
+        guard let baseUrl = URL(string: Constants.defaultBaseURL.absoluteString) else {
             preconditionFailure("Invalid base URL \(ErrorsList.RequestError.invalidBaseURL)")
         }
         guard let url = URL(string:

@@ -8,7 +8,7 @@ final class ProfileLogoutService {
     private var oAuth2TokenStorage = OAuth2TokenStorage()
     func logout() {
         
-        ProfileService.shared.deletProfil()
+        ProfileService.shared.deleteProfile()
         ProfileImageService.shared.deleteAvatar()
         ImagesListService.shared.deletImagesList()
         oAuth2TokenStorage.removeToken()
