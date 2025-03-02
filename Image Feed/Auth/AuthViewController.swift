@@ -16,26 +16,33 @@ final class AuthViewController: UIViewController {
         if segue.identifier == showWebViewSegueIdentifier {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(showWebViewSegueIdentifier)") }
+            else {
+                assertionFailure("Failed to prepare for \(showWebViewSegueIdentifier)")
+                return
+            }
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewViewController
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
     private func showAuthErrorAlert() {
-            let alert = UIAlertController(
-                title: "Что-то пошло не так(",
-                message: "Не удалось войти в систему",
-                preferredStyle: .alert
-            )
-            
-            let action = UIAlertAction(title: "OK", style: .default) { _ in
-                self.dismiss(animated: true)
-            }
-            alert.addAction(action)
-            
-            present(alert, animated: true)
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert
+        )
+        
+        let action = UIAlertAction(title: "OK", style: .default) { _ in
+            self.dismiss(animated: true)
         }
+        alert.addAction(action)
+        
+        present(alert, animated: true)
+    }
 }
 
 
@@ -53,7 +60,7 @@ extension AuthViewController: WebViewControllerDelegate {
                 oauth2TokenStorage.token = token
                 self.delegate?.didAuthenticate(self)
             case .failure:
-               
+                
                 self.showAuthErrorAlert()
             }
         }
